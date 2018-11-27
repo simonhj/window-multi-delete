@@ -9,11 +9,11 @@
 	      (force-mode-line-update 1))))))
 	
 
-(defun save-mode-prefix ()
+(defun save-mode-prefix (win-list)
   (mapcar (lambda (win)
 	    (with-current-buffer (window-buffer win)
 	      `(,win . ,mode-line-front-space)))
-	  (window-list)))
+	  (win-list)))
 
 (defun append-id (win-list)
   (let ((win-idx 0))
@@ -22,5 +22,5 @@
 	(setq-local mode-line-front-space  (concat "W: " (number-to-string win-idx)))
 	(setq win-idx (+ win-idx 1))
 	(force-mode-line-update t)))))
-
 (append-id (window-list))
+

@@ -24,3 +24,17 @@
 	(force-mode-line-update t)))))
 (append-id (window-list))
 
+(defun restore-prefs (old-vals)
+  (dolist (ac old-vals)
+    
+
+(defun kill-loop (win-list)
+  ())
+  
+
+
+(defun window-multi-kill ()
+  (let* ((windows (window-list))
+	 (to-restore (save-mode-prefix windows)))
+    (append-id windows)
+    

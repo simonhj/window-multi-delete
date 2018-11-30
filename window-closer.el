@@ -13,7 +13,9 @@
   (mapcar (lambda (win)
 	    (with-current-buffer (window-buffer win)
 	      `(,win . ,mode-line-front-space)))
-	  (win-list)))
+	  win-list))
+
+(cdr (save-mode-prefix (window-list)))
 
 (defun append-id (win-list)
   (let ((win-idx 0))
@@ -26,6 +28,13 @@
 
 (defun restore-prefs (old-vals)
   (dolist (ac old-vals)
+    (let ((buf (window-buffer (car ac)))
+	  (old (cdr ac)))
+      (with-current-buffer buf
+	(setq-local mode-line-front-space old)))))
+
+
+    
     
 
 (defun kill-loop (win-list)

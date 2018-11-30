@@ -40,10 +40,14 @@
 	val
       nil)))
 
+(defun read-window ()
+  (keystroke-to-int (read-char "id of window to delete?")))
+
 (defun kill-loop (win-list)
   (let ((save-mode-prefix win-list))
     (append-id win-list)
-    
+    (let ((win
+    (while 
   
 
 

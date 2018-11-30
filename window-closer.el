@@ -4,10 +4,6 @@
 	      `(,win . ,mode-line-front-space)))
 	  win-list))
 
-(save-mode-prefix (window-list))
-
-(defvar oldies (save-mode-prefix (window-list)))
-
 (defun append-id (win-list)
   (let ((win-idx 0))
     (dolist (win win-list)
@@ -15,7 +11,6 @@
 	(setq-local mode-line-front-space  (concat "W: " (number-to-string win-idx)))
 	(setq win-idx (+ win-idx 1))
 	(force-mode-line-update t)))))
-(append-id (window-list))
 
 (defun restore-prefs (old-vals)
   (dolist (ac old-vals)
@@ -44,12 +39,6 @@
 	(setq win (read-window))))
     (restore-prefs old)))
 	
-(kill-loop (window-list))
-
 (defun window-multi-kill ()
-  (let* ((windows (window-list))
-	 (to-restore (save-mode-prefix windows)))
-    (append-id windows)
-    
-
-    (read-char)
+  (interactive)
+  (kill-loop (window-list)))

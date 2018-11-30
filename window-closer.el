@@ -15,7 +15,7 @@
 	      `(,win . ,mode-line-front-space)))
 	  win-list))
 
-(cdr (save-mode-prefix (window-list)))
+(defvar oldies (save-mode-prefix (window-list)))
 
 (defun append-id (win-list)
   (let ((win-idx 0))
@@ -31,14 +31,19 @@
     (let ((buf (window-buffer (car ac)))
 	  (old (cdr ac)))
       (with-current-buffer buf
-	(setq-local mode-line-front-space old)))))
+	(setq-local mode-line-front-space old)
+	(force-mode-line-update)))))
 
-
-    
-    
+(defun keystroke-to-int (ks)
+  (let ((val (- ks 48)))
+    (if (and (>= val 0) (<= val 9))
+	val
+      nil)))
 
 (defun kill-loop (win-list)
-  ())
+  (let ((save-mode-prefix win-list))
+    (append-id win-list)
+    
   
 
 
@@ -47,3 +52,5 @@
 	 (to-restore (save-mode-prefix windows)))
     (append-id windows)
     
+
+    (read-char)

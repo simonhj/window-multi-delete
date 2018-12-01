@@ -1,3 +1,13 @@
+;;; window-closer.el --- quickly close multiple windows.
+
+;; Once invoked `window-multi-delete' will number all open windows and
+;; allow the user to close them by just hitting the corresponding key.
+
+;; TODO:
+;;  - Deal with multiple windows showing same buffer 
+;;  - Support more than 9 windows
+;;  - Apply more noticable face to added ids. 
+
 (defun save-mode-prefix (win-list)
   (mapcar (lambda (win)
 	    (with-current-buffer (window-buffer win)
@@ -33,10 +43,12 @@
 (defun kill-loop (win-list)
   (let ((old (save-mode-prefix win-list)))
     (append-id win-list)
-    (let ((win (read-window)))
-      (while (not (equal win nil))
-	(delete-window (nth win win-list))
-	(setq win (read-window))))
+    (let ((win-key (read-window)))
+      (while (not (equal win-key nil))
+	(let ((win (nth win-key win-list)))
+	  (when (window-live-p win)
+	    (delete-window win))
+	  (setq win-key (read-window)))))
     (restore-prefs old)))
 	
 (defun window-multi-kill ()

@@ -3,7 +3,7 @@
 ;; Once invoked `window-multi-delete' will number all open windows and
 ;; allow the user to close them by just hitting the corresponding key.
 
-;; TODO:
+;; TODO for publishing:
 ;;  - Deal with multiple windows showing same buffer 
 ;;  - Support more than 9 windows
 ;;  - Apply more noticable face to added ids. 
@@ -20,7 +20,7 @@
       (with-current-buffer (window-buffer win)
 	(setq-local mode-line-front-space  (concat "W: " (number-to-string win-idx)))
 	(setq win-idx (+ win-idx 1))
-	(force-mode-line-update t)))))
+	(force-mode-line-update)))))
 
 (defun restore-prefs (old-vals)
   (dolist (ac old-vals)
@@ -54,3 +54,15 @@
 (defun window-multi-kill ()
   (interactive)
   (kill-loop (window-list)))
+
+(let ((count 0))
+  (dolist (win (window-list))
+    (set-window-parameter win 'ret count)
+    (setq count (+ 1 count))
+    (message (number-to-string count))
+    (with-current-buffer (window-buffer win)
+      (setq-local mode-line-front-spac
+		  '(:eval (number-to-string (window-parameter (selected-window) 'ret)))))))
+
+
+(window-parameters)

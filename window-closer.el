@@ -5,7 +5,6 @@
 
 ;; TODO for publishing:
 ;;  - Deal with multiple windows showing same buffer 
-;;  - Support more than 9 windows
 ;;  - Apply more noticable face to added ids. 
 
 (defun save-mode-prefix (win-list)
@@ -18,7 +17,8 @@
   (let ((win-idx 0))
     (dolist (win win-list)
       (with-current-buffer (window-buffer win)
-	(setq-local mode-line-front-space  (concat "W: " (number-to-string win-idx)))
+	(set-window-parameter win 'win-killer-idx win-idx)
+	(setq-local mode-line-front-space '(:eval (number-to-string (window-parameter (selected-window) 'win-killer-idx))))
 	(setq win-idx (+ win-idx 1))
 	(force-mode-line-update)))))
 
@@ -54,15 +54,3 @@
 (defun window-multi-kill ()
   (interactive)
   (kill-loop (window-list)))
-
-(let ((count 0))
-  (dolist (win (window-list))
-    (set-window-parameter win 'ret count)
-    (setq count (+ 1 count))
-    (message (number-to-string count))
-    (with-current-buffer (window-buffer win)
-      (setq-local mode-line-front-spac
-		  '(:eval (number-to-string (window-parameter (selected-window) 'ret)))))))
-
-
-(window-parameters)

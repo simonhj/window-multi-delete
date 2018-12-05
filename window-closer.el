@@ -17,7 +17,12 @@
     (dolist (win win-list)
       (with-current-buffer (window-buffer win)
 	(set-window-parameter win 'win-killer-idx win-idx)
-	(setq-local mode-line-front-space '(:eval (number-to-string (window-parameter (selected-window) 'win-killer-idx))))
+	(setq-local mode-line-front-space
+		    '(:eval
+		      (propertize
+		       (concat "W: "
+			       (number-to-string (window-parameter (selected-window) 'win-killer-idx)))
+		       'face 'font-lock-keyword-face)))
 	(setq win-idx (+ win-idx 1))
 	(force-mode-line-update)))))
 

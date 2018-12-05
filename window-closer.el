@@ -2,9 +2,8 @@
 
 ;; Once invoked `window-multi-delete' will number all open windows and
 ;; allow the user to close them by just hitting the corresponding key.
-
-;; TODO for publishing:
-;;  - Apply more noticable face to added ids. 
+;; TODO:
+;; - Handle >9 widnows.
 
 (defun save-mode-prefix (win-list)
   (mapcar (lambda (win)
@@ -42,6 +41,7 @@
       nil)))
 
 (defun read-window ()
+  ;; slight lie, any key other than 0-9 terminates. 
   (keystroke-to-int (read-char "id of window to delete or q to quit?")))
 
 (defun kill-loop (win-list)

@@ -4,7 +4,6 @@
 ;; allow the user to close them by just hitting the corresponding key.
 
 ;; TODO for publishing:
-;;  - Deal with multiple windows showing same buffer 
 ;;  - Apply more noticable face to added ids. 
 
 (defun save-mode-prefix (win-list)
@@ -51,6 +50,6 @@
 	  (setq win-key (read-window)))))
     (restore-prefs old)))
 	
-(defun window-multi-kill ()
+(defun window-multi-delete ()
   (interactive)
   (kill-loop (window-list)))
